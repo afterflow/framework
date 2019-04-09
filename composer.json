@@ -1,0 +1,49 @@
+{
+  "name": "afterflow/framework",
+  "description": "Laravel Scaffolding Framework",
+  "keywords": [
+    "afterflow",
+    "framework"
+  ],
+  "homepage": "https://github.com/afterflow/framework",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Vladislav Novik",
+      "email": "librevlad@gmail.com",
+      "homepage": "https://serpentine.io",
+      "role": "Developer"
+    }
+  ],
+  "require": {
+    "php": "^7.1"
+  },
+  "require-dev": {
+    "larapack/dd": "^1.0",
+    "phpunit/phpunit": "^7.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "Afterflow\\Framework\\": "src"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Afterflow\\Framework\\Tests\\": "tests"
+    }
+  },
+  "scripts": {
+    "test": "vendor/bin/phpunit",
+    "test-coverage": "vendor/bin/phpunit --coverage-html coverage"
+  },
+  "config": {
+    "sort-packages": true
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "Afterflow\\Framework\\FrameworkServiceProvider"
+      ]
+    }
+  }
+}
