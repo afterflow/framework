@@ -1,4 +1,4 @@
-# Afterflow
+![Afterflow](./docs/logo.svg)
 
 Write custom Laravel scaffolders for your projects.
 
