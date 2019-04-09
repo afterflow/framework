@@ -29,7 +29,7 @@ class ScaffoldCommand extends Command
         app()->instance('afterflow-scaffold-command', $this);
 
         if ($s = $this->argument('class')) {
-            $this->runScaffolder( $s );
+            return $this->runScaffolder($s);
         }
 
         $scafs = [];
