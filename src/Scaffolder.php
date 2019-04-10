@@ -73,16 +73,16 @@ abstract class Scaffolder
         file_put_contents($file, str_replace($find, $replace, file_get_contents($file)));
     }
 
-    public function replaceInFileIfNotAlready($file, $find, $replace, $substringToCheck = null)
+    public function replaceInFileIfNotAlready($filen, $find, $replace, $substringToCheck = null)
     {
-        $file = file_get_contents($file);
+        $file = file_get_contents($filen);
         $substringToCheck = $substringToCheck ?? $replace;
 
         if (strpos($file, $substringToCheck)) {
             return false;
         }
 
-        file_put_contents($file, str_replace($find, $replace, file_get_contents($file)));
+        file_put_contents($filen, str_replace($find, $replace, $file));
     }
 
     public function replaceInFiles($files, $find, $replace)
@@ -138,6 +138,11 @@ abstract class Scaffolder
         }
 
         return $config[$key] ?? null;
+    }
+
+    protected function restart()
+    {
+        return $this->command->confirm('Restart scaffolder? ', true) ? $this->handle() : false;
     }
 
 }
