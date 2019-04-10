@@ -70,11 +70,17 @@ abstract class Scaffolder
      */
     public function replaceInFile($file, $find, $replace)
     {
+        if (!file_exists($file)) {
+            return false;
+        }
         file_put_contents($file, str_replace($find, $replace, file_get_contents($file)));
     }
 
     public function replaceInFileIfNotAlready($filen, $find, $replace, $substringToCheck = null)
     {
+        if (!file_exists($filen)) {
+            return false;
+        }
         $file = file_get_contents($filen);
         $substringToCheck = $substringToCheck ?? $replace;
 
