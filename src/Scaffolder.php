@@ -5,6 +5,7 @@ namespace Afterflow\Framework;
 
 
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\File;
 use Symfony\Component\Process\Process;
 
 /**
@@ -97,7 +98,24 @@ abstract class Scaffolder
                 (new Process($task))->run();
             });
         }
+    }
 
+    public function config($key, $value = null)
+    {
+        $filename = $_SERVER['HOME'].'/.config/afterflow/config.json';
+        if (!file_exists($filename)) {
+            File::makeDirectory(dirname($filename), 0666, true);
+            File::put($filename, '{}');
+        }
+
+        $config = json_decode(File::get($filename), true);
+
+        if ($value) {
+            $config[$key] = $value;
+            File::put($filename, json_encode($config, JSON_PRETTY_PRINT));
+        }
+
+        return $config[$key] ?? null;
     }
 
 }
