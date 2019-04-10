@@ -4,6 +4,7 @@ namespace Afterflow\Framework;
 
 
 use Afterflow\Framework\Concerns\WorksWithJsonFiles;
+use Illuminate\Support\Str;
 
 /**
  * Class ComposerJson
@@ -17,6 +18,20 @@ class ComposerJson
      * @var string
      */
     protected $filename = 'composer.json';
+
+    public function hasPackages($packages)
+    {
+        $c = $this->read();
+
+        $require = collect($c['require'])->merge($c['require-dev'])->keys();
+        foreach ($packages as $package) {
+            if (!$require->contains($package)) {
+                return false;
+            }
+        }
+
+        return true;
+    }
 
     /**
      * @param $files

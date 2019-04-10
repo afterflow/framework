@@ -3,6 +3,8 @@
 namespace Afterflow\Framework;
 
 use Afterflow\Framework\Concerns\WorksWithJsonFiles;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
 
 /**
  * Class PackageJson
@@ -29,6 +31,22 @@ class PackageJson
         }
 
         $this->write($packageJson);
+    }
+
+    public function hasPackages($packages)
+    {
+        $c = $this->read();
+
+        $require = collect(Arr::get($c, 'dependencies', []))->merge(Arr::get($c, 'devDependencies', []))->keys();
+        foreach ($packages as $package) {
+            $package = strpos($package, '@') ? Str::before($package, '@') : $package;
+            if (!$require->contains($package)) {
+                dd($require, $packages);
+                return false;
+            }
+        }
+
+        return true;
     }
 
 }
