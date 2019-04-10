@@ -70,6 +70,13 @@ abstract class Scaffolder
         file_put_contents($file, str_replace($find, $replace, file_get_contents($file)));
     }
 
+    public function replaceInFiles($files, $find, $replace)
+    {
+        foreach ($files as $file) {
+            $this->replaceInFile($file, $find, $replace);
+        }
+    }
+
     /**
      * @param $dir
      * @param $from
