@@ -23,6 +23,8 @@ abstract class Scaffolder
      */
     protected $question;
 
+    static $description = '';
+
     /**
      * Scaffolder constructor.
      * @param  null  $command
@@ -33,11 +35,6 @@ abstract class Scaffolder
         $this->command = $command ?? app('afterflow-scaffold-command');
         $this->composer = new ComposerJson();
         $this->package = new PackageJson();
-    }
-
-    public static function register()
-    {
-        ScaffolderRegistry::register(static::class);
     }
 
     /**

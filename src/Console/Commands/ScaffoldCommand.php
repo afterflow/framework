@@ -29,28 +29,27 @@ class ScaffoldCommand extends Command
     {
         app()->instance('afterflow-scaffold-command', $this);
 
-
-        dd(ScaffolderRegistry::all());
-
-
         if ($s = $this->argument('class')) {
             return $this->runScaffolder($s);
         }
 
-
-        $scafs = [];
-//        foreach (get_declared_classes() as $class) {
-//            if ($class instanceof Scaffolder) {
-//                $scafs[] = $class;
-//            }
+//        foreach (app()->tagged('afterflow-scaffolder') as $s) {
+//            $scafs [get_class($s)] = $s;
 //        }
 
-        foreach (app()->tagged('afterflow-scaffolder') as $s) {
-            $scafs [get_class($s)] = $s;
-        }
+        ScaffolderRegistry::scan();
 
-        $scaf = $this->choice('Which scaffolder to use?', array_keys($scafs));
-        $this->runScaffolder($scafs[$scaf]);
+        $scafs = collect(ScaffolderRegistry::all())
+            ->flatten();
+
+        $scafs2 = $scafs->map(function ($v) {
+            return '<comment>'.$v.'</comment> - '.$v::$description;
+        });
+
+
+        $scaf = $this->choice('Which scaffolder to use?', $scafs2->toArray());
+
+        $this->runScaffolder($scafs [$scafs2->flip()[$scaf]]);
 
 
         $this->line('');
