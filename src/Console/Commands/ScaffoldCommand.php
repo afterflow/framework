@@ -3,6 +3,7 @@
 namespace Afterflow\Framework\Console\Commands;
 
 use Afterflow\Framework\Concerns\RunsScaffolders;
+use Afterflow\Framework\ScaffolderRegistry;
 use Illuminate\Console\Command;
 
 class ScaffoldCommand extends Command
@@ -28,11 +29,21 @@ class ScaffoldCommand extends Command
     {
         app()->instance('afterflow-scaffold-command', $this);
 
+
+        dd(ScaffolderRegistry::all());
+
+
         if ($s = $this->argument('class')) {
             return $this->runScaffolder($s);
         }
 
+
         $scafs = [];
+//        foreach (get_declared_classes() as $class) {
+//            if ($class instanceof Scaffolder) {
+//                $scafs[] = $class;
+//            }
+//        }
 
         foreach (app()->tagged('afterflow-scaffolder') as $s) {
             $scafs [get_class($s)] = $s;

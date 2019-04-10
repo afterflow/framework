@@ -29,9 +29,15 @@ abstract class Scaffolder
      */
     public function __construct($command = null)
     {
+
         $this->command = $command ?? app('afterflow-scaffold-command');
         $this->composer = new ComposerJson();
         $this->package = new PackageJson();
+    }
+
+    public static function register()
+    {
+        ScaffolderRegistry::register(static::class);
     }
 
     /**
