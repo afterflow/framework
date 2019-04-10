@@ -41,7 +41,6 @@ class PackageJson
         foreach ($packages as $package) {
             $package = strpos($package, '@') ? Str::before($package, '@') : $package;
             if (!$require->contains($package)) {
-                dd($require, $packages);
                 return false;
             }
         }
