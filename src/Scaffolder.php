@@ -132,7 +132,7 @@ abstract class Scaffolder
     {
         $filename = $_SERVER['HOME'].'/.config/afterflow/config.json';
         if (!file_exists($filename)) {
-            File::makeDirectory(dirname($filename), 0666, true);
+            @mkdir(dirname($filename), 0666, true);
             File::put($filename, '{}');
         }
 
